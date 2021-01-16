@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.CourseMapper">
+    <resultMap type="com.example.demo.bean.Course" id="courseMap">
+        <id property="course_id" column="course_id"></id>
+        <result property="course_origin" column="course_origin"></result>
+        <result property="course_subject" column="course_subject"></result>
+        <result property="course_name" column="course_name"></result>
+        <result property="course_click" column="course_click"></result>
+        <result property="course_status" column="course_status"></result>
+        <result property="course_url" column="course_url"></result>
+        <result property="course_code" column="course_code"></result>
+    </resultMap>
+    <sql id="defaultCourse">
+         select *from course
+    </sql>
+
+    <!-- 根据id查询 -->
+    <select id="findCourse" resultMap="courseMap">
+        <include refid="defaultCourse"></include> where course_id=#{id}
+    </select>
+    <select id="findByPager" resultMap="courseMap">
+        <include refid="defaultCourse"></include>  WHERE course_subject LIKE  concat('%', #{subject}, '%')  ORDER BY course_id ASC limit #{page},#{size}
+    </select>
+
+    <select id="count" resultType="long">
+	select count(1) from course  WHERE course_subject LIKE  concat('%', #{subject}, '%')
+</select>
+</mapper>

@@ -1,0 +1,246 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+        <title>全部 - 课程 - 爱学习</title>
+
+    <link rel="stylesheet" href="../app/css/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../app/css/dest/styles.css">
+
+	<style>
+
+    </style>
+	
+    
+
+	
+    
+</head>
+
+<body>
+	
+        
+        
+            
+
+
+
+
+
+
+<nav class="navbar navbar-default navbar-fixed-top header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar-collapse" aria-expanded="false">
+                <span class="sr-only">爱学习</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../index.html">
+                <img src="../img/logo-grey.png">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="header-navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown active">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="active" href="" >全部课程</a></li>
+                        <li><a class="" href="../questions/index.html" >个人中心</a></li>
+                        <li><a class="" href="../developer/index.html">开发者</a></li>
+                    </ul>
+                </li>
+
+                <li class="">
+                    <a href="">课程</a>
+                </li>
+                <li class=" bootcamp new-nav logo-1111">
+                    <a href="../developer/index.html">开发者</a>
+
+                </li>
+                <li class=" new-nav logo-1111">
+                    <a href="../questions/index.html">个人中心</a>
+
+                </li>
+                
+            </ul>
+
+
+
+            
+
+            <form class="navbar-form navbar-right" action="../search" method="get" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search" autocomplete="off" placeholder="搜索 课程">
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>
+
+        
+	
+
+
+
+	
+	
+
+	
+
+
+<div class="container layout layout-margin-top">
+    
+    
+    <div class="row">
+        <div class="col-md-9 layout-body">
+            
+    <div class="content">
+        <div class="row course-cates">
+            <div class="col-md-1 course-cates-title">类别：</div>
+            <div class="col-md-11 course-cates-content">
+                <a class="active">全部</a>
+                <a class=""  th:class="${i.index==currentCategoryIndex?'active':' '} " th:href="'/searchCategory?'+'currentCategory='+${cg.getName()}+'&CategoryIndex='+${i.index}" th:each="cg,i:${categorys}" th:if="${cg.is_show}=='true'" th:text="${cg.getName()}"></a>
+            </div>
+        </div>
+        <div class="row course-cates">
+            <div class="col-md-1 course-cates-title">标签：</div>
+
+            <div class="col-md-11 course-cates-content" >
+                <a class="active">全部</a>
+                <a class="" th:class="${i.index==currentLabIndex?'active':' '} " th:href="'/searchLab?'+'currentLab='+${lab.getName()}+'&labIndex='+${i.index}" th:each="lab,i:${Labs}" th:if="${lab.is_show}=='1'" th:text="${lab.getName()}"></a>
+            </div>
+        </div>
+    </div>
+    <div class="content position-relative">
+        <div class="row">
+
+
+
+
+
+
+<!--            href="/loadCourse?subject=linux&page=1"-->
+<div class="col-md-4 col-sm-6  course" th:each="e:${pager.rows}">
+    <a class="course-box"  th:href="${e.getSubject_url()}"  >
+        <div class="sign-box">
+            
+
+        </div>
+<!--        src="https://dn-simplecloud.shiyanlou.com/ncn1.jpg"-->
+        <div class="course-img">
+<!--            title="Linux 基础入门（新版）"  alt="Linux 基础入门（新版）"-->
+            <img  th:alt="${e.getSubject_name()}"  th:src="${e.getImage_url()}" >
+            
+        </div>
+        
+        <div class="course-body">
+            <span class="course-title" data-toggle="tooltip" data-placement="bottom"  th:title="${e.getSubject_name()}" th:text="${e.getSubject_name()}"></span>
+        </div>
+        <div class="course-footer">
+			<span class="course-per-num pull-left">
+                <i class="fa fa-users"></i>
+                
+                85219
+                
+			</span>
+            
+                
+            
+        </div>
+    </a>
+</div>
+
+
+            
+
+
+        
+        </div>
+        
+
+<nav class="pagination-container">
+    <ul class="pagination">
+        
+        <li class=" ">
+            <a href="/pagePrevious" aria-label="Previous">
+                <span aria-hidden="true">上一页</span>
+            </a>
+        </li>
+        
+        
+
+        <li class=" " th:class="${i==currentPageIndex?'active':' '} " th:each="i:${#numbers.sequence(firstPage,lastPage)}" >
+            <a href=""   th:href="${'/searchpage?page='+i}" th:text="${i}"></a>
+        </li>
+        
+        
+        
+
+        
+        <li class="">
+            <a aria-label="Next" href="/pageNext">
+                <span aria-hidden="true">下一页</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    </div>
+
+        </div>
+        <div class="col-md-3 layout-side">
+            
+	
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+	<div class="modal fade" id="flash-message" tabindex="-1" role="dialog">
+		<div class="modal-dialog" rolw="document">
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+	
+</body>
+<script>
+   function change(){
+       $(this).attr("class","active");
+   }
+
+
+</script>
+</html>

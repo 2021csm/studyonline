@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.SubjectMapper">
+    <resultMap type="com.example.demo.bean.Subject" id="subjectMap">
+        <id property="id" column="id"></id>
+        <result property="subject_url" column="subject_url"></result>
+        <result property="Image_url" column="Image_url"></result>
+        <result property="subject_name" column="subject_name"></result>
+    </resultMap>
+    <sql id="defaultSubject">
+         select *from SUBJECT
+    </sql>
+<!--    <sql id="total" >-->
+<!--      SELECT COUNT(1) FROM SUBJECT-->
+<!--    </sql>-->
+    <!-- 根据id查询 -->
+    <select id="findSubjectById" resultMap="subjectMap">
+        <include refid="defaultSubject"></include> where id=#{id}
+    </select>
+    <select id="findByPager" resultMap="subjectMap">
+        <include refid="defaultSubject"></include>  WHERE subject_name LIKE  concat('%', #{subject}, '%')  limit #{page},#{size}
+    </select>
+    <select id="findList" resultMap="subjectMap">
+    SELECT * FROM `subject` WHERE id IN(SELECT subject_id FROM `subject_info` WHERE subject_info_name LIKE  concat('%', #{name}, '%')
+    and  value_list LIKE  concat('%', #{value}, '%') ) limit #{page},#{size};
+    </select>
+    <select id="findListT" resultMap="subjectMap">
+     SELECT * FROM `subject` WHERE id IN(SELECT subject_id  FROM `subject_info` WHERE subject_info_name LIKE  concat('%', #{name1}, '%') AND value_list LIKE  concat('%', #{value1}, '%') AND subject_id  IN(
+     SELECT subject_id FROM `subject_info` WHERE subject_info_name LIKE  concat('%', #{name2}, '%') AND value_list LIKE  concat('%', #{value2}, '%') )) ;
+    </select>
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.SubjectInfoMapper">
+    <resultMap type="com.example.demo.bean.SubjectInfo" id="subInfoMap">
+        <id property="subject_info_id" column="subject_info_id"></id>
+        <result property="subject_id" column="subject_id"></result>
+        <result property="subject_info_name" column="subject_info_name"></result>
+        <result property="value_list" column="value_list"></result>
+    </resultMap>
+    <sql id="defaultSubInfo">
+         select *from subject_info
+    </sql>
+
+    <!-- 查询 所有-->
+    <select id="findByPager" resultMap="subInfoMap">
+        <include refid="defaultSubInfo"></include>  WHERE subject_info_name LIKE  concat('%', #{name}, '%') and value_list=#{value}  limit #{page},#{size}
+    </select>
+
+
+</mapper>
